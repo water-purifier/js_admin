@@ -19,5 +19,6 @@ module.exports = {
     Sequelize: Sequelize,
     dbConnect: dbConnect,
     User: require('./User')(dbConnect, Sequelize),
+    Post: require('./Post')(dbConnect, Sequelize),
 
 }
