@@ -1,19 +1,27 @@
-const express = require('express');
-const router = express.Router();
 const postController = require('../controllers/PostController');
 const userController = require('../controllers/UserController');
+const {cookieAuth} = require('../middleware/Auth');
+// const {User} = require("../models");
 
-// post 부분
-router.get('/posts', postController.getPosts);
-router.get('/post/:id', postController.getPost);
+const router = (app) => {
+    app.get('/', (req, res) => {
+        res.redirect('/login');
+    })
+    // 로그인 성공시 post 부분
+    app.get('/posts', cookieAuth, postController.getPosts);
+    app.get('/posts/:id', cookieAuth, postController.getPost);
 
-// 로그인 유저
-router.get('/login', (req, res) => {
-    res.render('login.twig');
-})
+    // 로그인 유저
+    app.get('/login', (req, res) => {
+        res.render('login.twig');
+    })
 
-router.get('/register', (req, res) => {
-    res.render('register.twig');
-})
+    app.get('/register', (req, res) => {
+        res.render('register.twig');
+    })
 
+    app.post('/login', userController.getUser)
+
+    app.post('/register', userController.insertUser)
+};
 module.exports = router;

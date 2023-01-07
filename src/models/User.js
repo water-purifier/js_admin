@@ -9,7 +9,7 @@ module.exports = (dbConnect,Sequelize) => {
             allowNull: true
         },
         token: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT('long'),
             allowNull: true
         },
         is_active: {
